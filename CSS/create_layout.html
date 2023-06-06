@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<!-- <link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+			integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+			crossorigin="anonymous"
+		/>
+		<script
+			src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+			integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+			crossorigin="anonymous"
+		></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+			integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+			crossorigin="anonymous"
+		></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+			integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+			crossorigin="anonymous"
+		></script> -->
+		<style>
+			* {
+				margin: 0px;
+				padding: 0px;
+                font-size: 12px;
+				box-sizing: border-box;
+				border: 0.5px solid rgb(103, 156, 156);
+			}
+			.container {
+				width: 100%;
+				margin: 0px auto;
+			}
+			.container-header {
+				width: 100%;
+				height: 100px;
+				display: flex;
+			}
+			.container-footer {
+				width: 100%;
+				height: 30px;
+			}
+			/* -----------------header---------------------- */
+			.header-left {
+				width: 25%;
+			}
+			.header-right {
+				width: 75%;
+			}
+			/* -----------------body---------------------- */
+			.container-body {
+				width: 100%;
+			}
+			.body-top {
+				width: 100%;
+				height: 30px;
+				display: flex;
+				justify-content: space-between;
+			}
+			.body-center {
+				width: 100%;
+				display: flex;
+			}
+			.body-center-left {
+				width: 15%;
+			}
+			.body-center-left-1 > li {
+				display: block;
+				padding: 10px;
+			}
+			.body-center-left-2 {
+				height: 200px;
+			}
+			.body-center-center {
+				width: 65%;
+			}
+			.body-center-right {
+				width: 20%;
+			}
+			.body-center-center {
+				width: 100%;
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: space-between;
+				align-content: stretch;
+				margin: 0 5px 5px 5px;
+			}
+			.body-center-center > div {
+				height: 200px;
+				width: 33%;
+				/* margin: 2px; */
+			}
+			#hotnews,
+			#photoslide {
+				width: 50%;
+				margin: 0px auto;
+			}
+
+			#search {
+				margin: 2.5px;
+				margin-left: auto;
+				width: 15%;
+				border-radius: 8px;
+				height: 25px;
+			}
+			.menu-item {
+				float: left;
+				padding: 5px;
+				margin-right: 5px;
+				list-style: none;
+				height: 30px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="container">
+			<div class="container-header">
+				<div class="header-left"></div>
+				<div class="header-right"></div>
+			</div>
+			<div class="container-body">
+				<div class="body-top">
+					<div class="menu">
+						<ul class="menu-list">
+							<li class="menu-item">Home</li>
+							<li class="menu-item">Students</li>
+							<li class="menu-item">Courses</li>
+							<li class="menu-item">About Us</li>
+							<li class="menu-item">Contact Us</li>
+						</ul>
+					</div>
+					<input type="text" placeholder="Search ..." id="search" />
+				</div>
+				<div class="body-center">
+					<div class="body-center-left">
+						<ul class="body-center-left-1">
+							<li>Introduction</li>
+							<li>News</li>
+							<li>Education</li>
+							<li>Register</li>
+							<li>Courses</li>
+						</ul>
+						<div class="body-center-left-2"></div>
+					</div>
+					<div class="body-center-center">
+						<!-- <div class="center-row-1"> -->
+						<div id="hotnews">Hot news</div>
+						<div id="photoslide">Photo slide</div>
+						<!-- </div> -->
+						<!-- <div class="center-row-2"> -->
+						<div id="news-1">News 1</div>
+						<div id="news-2">News 2</div>
+						<div id="news-3">News 3</div>
+						<!-- </div> -->
+						<!-- <div class="center-row-3"> -->
+						<div id="news-4">News 4</div>
+						<div id="news-5">News 5</div>
+						<div id="news-6">News 6</div>
+						<!-- </div> -->
+					</div>
+					<div class="body-center-right"></div>
+				</div>
+				<div class="body-bottom"></div>
+			</div>
+			<div class="container-footer"></div>
+		</div>
+	</body>
+</html>
