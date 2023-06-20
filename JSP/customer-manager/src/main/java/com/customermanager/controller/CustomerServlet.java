@@ -1,6 +1,7 @@
 package com.customermanager.controller;
 import com.customermanager.model.Customer;
 import com.customermanager.model.CustomerType;
+import com.customermanager.model.Pageable;
 import com.customermanager.service.ICustomerService;
 //import com.customermanager.service.CustomerServiceImpl;
 import com.customermanager.service.CustomerServiceImplMySql;
@@ -37,9 +38,9 @@ public class CustomerServlet extends HttpServlet {
             case "edit":
                 showEditForm(request, response);
                 break;
-            case "delete":
-                showDeleteForm(request, response);
-                break;
+//            case "delete":
+//                showDeleteForm(request, response);
+//                break;
             case "view":
                 viewCustomer(request, response);
                 break;
@@ -56,39 +57,15 @@ public class CustomerServlet extends HttpServlet {
         request.setAttribute("customer", customer);
         request.getRequestDispatcher("customer/view.jsp").forward(request, response);
     }
-    private void showDeleteForm(HttpServletRequest request, HttpServletResponse response) {
-        long id = Integer.parseInt(request.getParameter("id"));
-        Customer customer = this.iCustomerService.findById(id);
-        RequestDispatcher dispatcher;
-        if(customer == null){
-            dispatcher = request.getRequestDispatcher("customer/error-404.jsp");
-        } else {
-            request.setAttribute("customer", customer);
-            dispatcher = request.getRequestDispatcher("customer/delete.jsp");
-        }
-        try {
-            dispatcher.forward(request, response);
-        } catch (ServletException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        long id = Integer.parseInt(request.getParameter("id"));
-        Customer customer = iCustomerService.findById(id);
-        List<CustomerType> customerTypes = iCustomerType.getAllCustomerTypes();
-
-        request.setAttribute("customer", customer);
-        request.setAttribute("customerTypes", customerTypes);
-        request.getRequestDispatcher("customer/edit.jsp").forward(request, response);
+//    private void showDeleteForm(HttpServletRequest request, HttpServletResponse response) {
+//        long id = Integer.parseInt(request.getParameter("id"));
+//        Customer customer = this.iCustomerService.findById(id);
 //        RequestDispatcher dispatcher;
 //        if(customer == null){
 //            dispatcher = request.getRequestDispatcher("customer/error-404.jsp");
 //        } else {
 //            request.setAttribute("customer", customer);
-//            request.setAttribute("customerTypes", customerTypes);
-//            dispatcher = request.getRequestDispatcher("customer/edit.jsp");
+//            dispatcher = request.getRequestDispatcher("customer/delete.jsp");
 //        }
 //        try {
 //            dispatcher.forward(request, response);
@@ -97,6 +74,16 @@ public class CustomerServlet extends HttpServlet {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
+//    }
+    private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        long id = Integer.parseInt(request.getParameter("id"));
+        Customer customer = iCustomerService.findById(id);
+        List<CustomerType> customerTypes = iCustomerType.getAllCustomerTypes();
+
+        request.setAttribute("customer", customer);
+        request.setAttribute("customerTypes", customerTypes);
+        request.getRequestDispatcher("customer/edit.jsp").forward(request, response);
+
     }
     private void showCreatForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Gửi danh sách loại khách hàng tới trang create
@@ -108,17 +95,46 @@ public class CustomerServlet extends HttpServlet {
 
     }
     private void listCustomers(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Customer> customers = iCustomerService.findAll2();
+        Pageable pageable = new Pageable();
+        inputPageable(request, pageable);
+
+//        List<Customer> customers = iCustomerService.findAll2();
+        List<Customer> customers = iCustomerService.findAdvanced(pageable);
+
+        List<CustomerType> customerTypes = iCustomerType.getAllCustomerTypes();
+
+        request.setAttribute("pageable", pageable);
         request.setAttribute("customers", customers);
+        request.setAttribute("customerTypes", customerTypes);
         request.getRequestDispatcher("customer/list.jsp").forward(request, response);
 
-//        List<Customer> customers = customerService.findAll2();
-////        List<CustomerType> customerTypes = iCustomerType.getAllCustomerTypes();
-//
-//
-//        request.setAttribute("customers", customers);
-////        req.setAttribute("customerTypes", customerTypes);
-//        request.getRequestDispatcher("/customer/list.jsp").forward(request, response);
+    }
+    private void inputPageable(HttpServletRequest request, Pageable pageable) {
+        if (request.getParameter("keyword") != null) {
+            String kw = request.getParameter("keyword");
+            pageable.setKeyword(kw);
+        }
+        if (request.getParameter("page") != null) {
+            int page = Integer.parseInt(request.getParameter("page"));
+            pageable.setPage(page);
+        }
+        if (request.getParameter("limit") != null) {
+            int limit = Integer.parseInt(request.getParameter("limit"));
+            pageable.setPage(limit);
+        }
+        if (request.getParameter("sortfield") != null) {
+            String sortField = request.getParameter("sortfield");
+            pageable.setSortField(sortField);
+        }
+        if (request.getParameter("order") != null) {
+            String order = request.getParameter("order");
+            pageable.setOrder(order);
+        }
+        System.out.println("..........................." + request.getParameter("customertype"));
+        if (request.getParameter("customertype") != null) {
+            int type = Integer.parseInt(request.getParameter("customertype"));
+            pageable.setType(type);
+        }
     }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -138,28 +154,19 @@ public class CustomerServlet extends HttpServlet {
             case "delete":
                 deleteCustomer(request, response);
                 break;
-            case "search":
-                searchCustomer(request, response);
-                break;
+//            case "search":
+//                searchCustomer(request, response);
+//                break;
             default:
                 break;
         }
     }
-    private void deleteCustomer(HttpServletRequest request, HttpServletResponse response) {
+    private void deleteCustomer(HttpServletRequest request, HttpServletResponse response) throws IOException {
         long id = Integer.parseInt(request.getParameter("id"));
-        Customer customer = this.iCustomerService.findById(id);
+        iCustomerService.remove(id);
+        List<Customer> customers = iCustomerService.findAll2();
+        response.sendRedirect("/customers");
 
-        RequestDispatcher dispatcher;
-        if(customer == null){
-            dispatcher = request.getRequestDispatcher("customer/error-404.jsp");
-        } else {
-            this.iCustomerService.remove(id);
-            try {
-                response.sendRedirect("/customers");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     private void updateCustomer(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -208,16 +215,17 @@ public class CustomerServlet extends HttpServlet {
             // Nếu nhập không đúng thì trả thông tin đã nhập về trang và kèm thông báo lỗi
             request.setAttribute("customer", customer);
             request.setAttribute("errors", errors);
-            List<CustomerType> customerTypes = iCustomerType.getAllCustomerTypes();
-            request.setAttribute("customerTypes", customerTypes);
+
         }
 
         // Gửi customer type cho trang create
-
+        List<CustomerType> customerTypes = iCustomerType.getAllCustomerTypes();
+        request.setAttribute("customerTypes", customerTypes);
         request.getRequestDispatcher("customer/create.jsp").forward(request, response);
 
 
     }
+    /**
     private void searchCustomer(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Customer> customers = iCustomerService.findAll2();
         String name = req.getParameter("search");
@@ -234,7 +242,7 @@ public class CustomerServlet extends HttpServlet {
         req.getRequestDispatcher("customer/list.jsp").forward(req, resp);
 
     }
-
+**/
     //--------------------------Validate------------------------------
     private void validateInputCustomerType(HttpServletRequest req, List<String> errors, Customer customer) {
         try {

@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public abstract class DBContext {
     protected String jdbcURL = "jdbc:mysql://localhost:3306/duan_banhang?allowPublicKeyRetrieval=true&useSSL=false";
     protected String jdbcUsername = "root";
-    protected String jdbcPassword = "Raisingthebar123";
+    protected String jdbcPassword = "Raisingthebar123@";
 
     protected Connection getConnection() {
         Connection connection = null;

@@ -31,8 +31,6 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Description</th>
-<%--                <th>CreateAt</th>--%>
-<%--                <th>DeleteAt</th>--%>
                 <th>Price</th>
                 <th>Category</th>
                 <th>Action</th>
@@ -46,14 +44,7 @@
                     <td>${p.getDescription()}</td>
                     <td>${p.getPrice()}</td>
                     <td>${p.getCategory().getName()}</td>
-<%--                    <td>--%>
-<%--                            &lt;%&ndash;                    <c:forEach items="${requestScope.customerTypes}" var="ct">&ndash;%&gt;--%>
-<%--                            &lt;%&ndash;                        <c:if test="${c.getTypeId() == ct.getId()}">&ndash;%&gt;--%>
-<%--                            &lt;%&ndash;                            ${ct.getName()}&ndash;%&gt;--%>
-<%--                            &lt;%&ndash;                        </c:if>&ndash;%&gt;--%>
-<%--                            &lt;%&ndash;                    </c:forEach>&ndash;%&gt;--%>
-<%--                            ${p.getCategory().getName()}--%>
-<%--                    </td>--%>
+
                     <td class="col-sm-3">
                         <div class="d-flex justify-content-around">
                             <a href="/products?action=view&id=${p.getId()}" class="btn btn-primary btn-sm"><i

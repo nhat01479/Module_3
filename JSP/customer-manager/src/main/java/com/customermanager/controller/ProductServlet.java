@@ -228,10 +228,16 @@ public class ProductServlet extends HttpServlet {
 
     }
     private void validateInputPrice(HttpServletRequest req, List<String> errors, Product product) {
-        String price = req.getParameter("price");
-        if (!ValidateUtils.isPriceValid(price)) {
-            errors.add("Giá không hợp lệ. Giá phải lớn hơn hoặc bằng 1.000 và nhỏ hơn 100.000.000.\n Phần thập phân tối đa 2 chữ số.");
+        try {
+            String price = req.getParameter("price");
+            if (!ValidateUtils.isPriceValid(price)) {
+                errors.add("Giá không hợp lệ. Giá phải lớn hơn hoặc bằng 1.000 và nhỏ hơn 100.000.000.\n Phần thập phân tối đa 2 chữ số.");
+            }
+            product.setPrice(Float.parseFloat(price));
+        } catch (NumberFormatException e) {
+            errors.add("Giá không được để trống");
+            product.setPrice(1000);
         }
-        product.setPrice(Float.parseFloat(price));
+
     }
 }

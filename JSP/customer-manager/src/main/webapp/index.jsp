@@ -12,7 +12,9 @@
 </head>
 <body>
 <h1>Hello</h1>
-<a href="customers">Customer</a>
-<a href="products">Product</a>
+<a href="customers">Customer</a><br>
+<a href="products">Product</a><br>
+<a href="users">User</a><br>
+<a href="cart">Cart</a><br>
 </body>
 </html>
